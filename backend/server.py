@@ -223,7 +223,7 @@ async def upload_audio(room_id: str, audio: UploadFile = File(...)):
         if not audio.filename.endswith(('.webm', '.wav', '.mp3')):
             raise HTTPException(status_code=400, detail="Invalid audio format. Supported: .webm, .wav, .mp3")
         
-        # TODO: Implement audio transcription with Whisper (Phase 2)
+        # TODO: Implement audio transcription with Whisper (Phase 3)
         transcribed_text = "Esta é uma transcrição temporária do áudio. O Whisper será integrado na próxima fase."
         
         # Create question from transcription
@@ -239,7 +239,9 @@ async def upload_audio(room_id: str, audio: UploadFile = File(...)):
         await questions_collection.insert_one(question_data)
         
         # Generate AI response
-        ai_response = "Esta é uma resposta temporária para o áudio transcrito. A IA será integrada na próxima fase."
+        print(f"Generating AI response for audio transcription: {transcribed_text}")
+        ai_response = await ai_service.generate_response(transcribed_text)
+        print(f"AI response generated: {ai_response}")
         
         # Create answer
         answer_id = str(uuid.uuid4())
