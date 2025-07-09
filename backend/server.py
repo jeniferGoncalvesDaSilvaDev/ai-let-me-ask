@@ -10,6 +10,9 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
 import json
 
+# Import AI service
+from ai_service import ai_service
+
 # Pydantic models
 class RoomCreate(BaseModel):
     name: str
