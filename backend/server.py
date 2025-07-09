@@ -149,8 +149,10 @@ async def create_question(room_id: str, question: QuestionCreate):
         
         await questions_collection.insert_one(question_data)
         
-        # TODO: Generate AI response (will be implemented in Phase 2)
-        ai_response = "Esta é uma resposta temporária. A IA será integrada na próxima fase."
+        # Generate AI response
+        print(f"Generating AI response for question: {question.content}")
+        ai_response = await ai_service.generate_response(question.content)
+        print(f"AI response generated: {ai_response}")
         
         # Create answer
         answer_id = str(uuid.uuid4())
