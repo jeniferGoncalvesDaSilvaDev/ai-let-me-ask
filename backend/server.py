@@ -11,6 +11,8 @@ from bson import ObjectId
 import json
 
 # Import AI service
+import sys
+sys.path.append('/app/backend')
 from ai_service import ai_service
 
 # Pydantic models
