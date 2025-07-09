@@ -225,8 +225,16 @@ async def upload_audio(room_id: str, audio: UploadFile = File(...)):
         if not audio.filename.endswith(('.webm', '.wav', '.mp3')):
             raise HTTPException(status_code=400, detail="Invalid audio format. Supported: .webm, .wav, .mp3")
         
-        # TODO: Implement audio transcription with Whisper (Phase 3)
-        transcribed_text = "Esta é uma transcrição temporária do áudio. O Whisper será integrado na próxima fase."
+        # Read audio data
+        audio_data = await audio.read()
+        
+        # Extract format from filename
+        audio_format = audio.filename.split('.')[-1]
+        
+        # Transcribe audio using Whisper
+        print(f"Transcribing audio file: {audio.filename}")
+        transcribed_text = await ai_service.transcribe_audio(audio_data, audio_format)
+        print(f"Transcription result: {transcribed_text}")
         
         # Create question from transcription
         question_id = str(uuid.uuid4())
