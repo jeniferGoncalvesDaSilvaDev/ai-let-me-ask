@@ -10,6 +10,11 @@ pymongo==4.6.0
 # Data Validation
 pydantic==2.5.0
 
+# AI and Machine Learning (Lightweight versions)
+transformers==4.35.0
+torch==2.0.1
+tokenizers==0.14.1
+
 # HTTP requests for Hugging Face API
 requests==2.31.0
 
