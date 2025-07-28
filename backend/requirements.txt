@@ -10,19 +10,21 @@ pymongo==4.6.0
 # Data Validation
 pydantic==2.5.0
 
-# AI and Machine Learning
-transformers==4.36.0
-torch>=2.5.0
-tokenizers==0.15.0
-openai-whisper==20231117
+# AI and Machine Learning (Lightweight versions)
+transformers==4.35.0
+torch==2.0.1+cpu --find-links https://download.pytorch.org/whl/torch_stable.html
+tokenizers==0.14.1
 
-# Audio Processing
-librosa==0.10.1
-soundfile==0.12.1
-ffmpeg-python==0.2.0
+# Audio Processing (Lightweight alternative)
+SpeechRecognition==3.10.0
+pydub==0.25.1
+
+# HTTP requests for Hugging Face API
+requests==2.31.0
 
 # Security and SSL
 certifi>=2023.11.17
 
 # Additional utilities
 python-dotenv==1.0.0
+asyncio==3.4.3
