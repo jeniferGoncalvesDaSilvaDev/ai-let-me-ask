@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Dict, Any, Optional
 
 class NLWAgentsAPITester:
-    def __init__(self, base_url: str = "https://3eed6482-8f1a-47b8-b2e5-42b54c81d8c2.preview.emergentagent.com"):
+    def __init__(self, base_url: str = "https://6ebaef84-fe91-43c3-ada5-cd4f8c23e7f0.preview.emergentagent.com"):
         self.base_url = base_url
         self.tests_run = 0
         self.tests_passed = 0
