@@ -1,0 +1,51 @@
+# 📋 NLW Agents API - Requirements.txt
+# Dependências Python para o Backend FastAPI
+
+# ===========================
+# WEB FRAMEWORK & API
+# ===========================
+fastapi==0.104.1                # Framework web moderno e rápido
+uvicorn[standard]==0.24.0        # Servidor ASGI para FastAPI
+python-multipart==0.0.6         # Upload de arquivos e form-data
+
+# ===========================
+# DATABASE (MongoDB)
+# ===========================
+motor==3.3.2                    # Driver MongoDB assíncrono
+pymongo==4.6.0                  # Driver MongoDB oficial
+
+# ===========================
+# DATA VALIDATION & MODELS
+# ===========================
+pydantic==2.5.0                 # Validação de dados e serialização
+
+# ===========================
+# ARTIFICIAL INTELLIGENCE
+# ===========================
+transformers==4.36.0            # Modelos de linguagem Hugging Face
+torch==2.1.0                    # PyTorch para ML
+tokenizers==0.15.0              # Tokenizadores para NLP
+openai-whisper==20231117        # Transcrição de áudio da OpenAI
+
+# ===========================
+# AUDIO PROCESSING
+# ===========================
+librosa==0.10.1                 # Análise de áudio
+soundfile==0.12.1               # Leitura/escrita de arquivos de áudio
+ffmpeg-python==0.2.0            # Interface Python para FFmpeg
+
+# ===========================
+# SECURITY & SSL
+# ===========================
+certifi==2023.11.17             # Certificados SSL/TLS
+
+# ===========================
+# UTILITIES
+# ===========================
+python-dotenv==1.0.0            # Carregamento de variáveis de ambiente
+
+# ===========================
+# DEPLOYMENT & PRODUCTION
+# ===========================
+# gunicorn==21.2.0              # Servidor WSGI alternativo (opcional)
+# supervisor==4.2.5             # Gerenciador de processos (opcional)
