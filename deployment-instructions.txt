@@ -114,7 +114,7 @@ Se preferir deploy manual para cada serviço:
 
 ### Backend (.env local - NÃO fazer commit):
 ```
-MONGO_URL=mongodb://localhost:27017  # Para desenvolvimento local
+MONGO_URL=mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0  # Para desenvolvimento e produção
 ```
 
 ### Frontend (.env local - NÃO fazer commit):
