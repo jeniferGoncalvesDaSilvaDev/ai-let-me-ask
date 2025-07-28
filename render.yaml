@@ -11,7 +11,7 @@ services:
       uvicorn server:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: MONGO_URL
-        sync: false
+        value: mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0
       - key: PYTHONPATH
         value: /opt/render/project/src/backend
     autoDeploy: true
