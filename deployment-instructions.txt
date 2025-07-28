@@ -72,7 +72,7 @@ git push -u origin main
    
    **Para o Backend Service:**
    ```
-   MONGO_URL=mongodb+srv://user:password@cluster.mongodb.net/nlw_agents
+   MONGO_URL=mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0
    PYTHONPATH=/opt/render/project/src/backend
    ```
 
