@@ -10,9 +10,9 @@ pymongo==4.6.0
 # Data Validation
 pydantic==2.5.0
 
-# AI and Machine Learning (Lightweight versions)
+# AI and Machine Learning (Lightweight versions - CPU only)
 transformers==4.35.0
-torch==2.0.1+cpu --find-links https://download.pytorch.org/whl/torch_stable.html
+torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
 tokenizers==0.14.1
 
 # Audio Processing (Lightweight alternative)
@@ -27,4 +27,3 @@ certifi>=2023.11.17
 
 # Additional utilities
 python-dotenv==1.0.0
-asyncio==3.4.3
