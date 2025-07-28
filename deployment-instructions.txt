@@ -124,7 +124,7 @@ REACT_APP_BACKEND_URL=http://localhost:8001  # Para desenvolvimento local
 
 ### No Render (via Dashboard):
 
-1. **Backend Service Environment Variables:**
+1. **Backend Service Environment Variables (JÁ CONFIGURADAS NO render.yaml):**
    ```
    MONGO_URL = mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0
    PYTHONPATH = /opt/render/project/src/backend
