@@ -58,7 +58,18 @@ app.add_middleware(
 
 # MongoDB connection
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
-client = AsyncIOMotorClient(MONGO_URL, tlsCAFile=certifi.where())
+
+# Configure MongoDB client with SSL support
+try:
+    if "mongodb+srv" in MONGO_URL:
+        client = AsyncIOMotorClient(MONGO_URL, tlsCAFile=certifi.where())
+    else:
+        client = AsyncIOMotorClient(MONGO_URL)
+except Exception as e:
+    print(f"MongoDB connection error: {e}")
+    # Fallback for development
+    client = AsyncIOMotorClient("mongodb://localhost:27017")
+
 db = client["ai-let-me-ask"]
 rooms_collection = db.rooms
 questions_collection = db.questions
