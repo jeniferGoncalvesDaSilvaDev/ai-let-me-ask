@@ -58,7 +58,7 @@ app.add_middleware(
 # MongoDB connection
 MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
 client = AsyncIOMotorClient(MONGO_URL)
-db = client.nlw_agents
+db = client["ai-let-me-ask"]
 rooms_collection = db.rooms
 questions_collection = db.questions
 answers_collection = db.answers
