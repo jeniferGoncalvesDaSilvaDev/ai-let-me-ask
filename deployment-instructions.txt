@@ -112,9 +112,9 @@ Se preferir deploy manual para cada serviço:
 
 ## 🔒 Configuração de Variáveis de Ambiente
 
-### Backend (.env local - NÃO fazer commit):
+### Backend (.env local - JÁ CONFIGURADO):
 ```
-MONGO_URL=mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0  # Para desenvolvimento e produção
+MONGO_URL=mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0
 ```
 
 ### Frontend (.env local - NÃO fazer commit):
