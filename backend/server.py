@@ -9,6 +9,7 @@ import uuid
 from motor.motor_asyncio import AsyncIOMotorClient
 from bson import ObjectId
 import json
+import certifi
 
 # Import AI service
 import sys
