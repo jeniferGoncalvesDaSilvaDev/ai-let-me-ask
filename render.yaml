@@ -1,19 +1,22 @@
 services:
-  # Backend Service - FastAPI
+  # Backend Service - FastAPI (Optimized for deployment)
   - type: web
     name: nlw-agents-backend
     runtime: python
     buildCommand: |
       cd backend
+      pip install --upgrade pip
       pip install -r requirements.txt
     startCommand: |
       cd backend
-      uvicorn server:app --host 0.0.0.0 --port $PORT
+      uvicorn server:app --host 0.0.0.0 --port $PORT --workers 1
     envVars:
       - key: MONGO_URL
         value: mongodb+srv://jeyjey2025cyborg:kjcd5588@cluster0.jkp7hed.mongodb.net/ai-let-me-ask?retryWrites=true&w=majority&appName=Cluster0
       - key: PYTHONPATH
         value: /opt/render/project/src/backend
+      - key: PYTHONUNBUFFERED
+        value: "1"
     autoDeploy: true
     rootDir: backend
     plan: free
@@ -26,7 +29,7 @@ services:
     runtime: node
     buildCommand: |
       cd frontend
-      yarn install
+      yarn install --frozen-lockfile
       yarn build
     staticPublishPath: ./frontend/build
     envVars:
@@ -35,6 +38,8 @@ services:
           type: web
           name: nlw-agents-backend
           property: host
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=1024"
     autoDeploy: true
     rootDir: frontend
     plan: free
@@ -47,6 +52,9 @@ services:
       - path: /*
         name: X-Content-Type-Options
         value: nosniff
+      - path: /*
+        name: Cache-Control
+        value: public, max-age=31536000, s-maxage=31536000
     redirects:
       - source: /*
         destination: /index.html
@@ -54,4 +62,4 @@ services:
     routes:
       - type: rewrite
         source: /api/*
-        destination: https://nlw-agents-backend.onrender.com/api/*
+        destination: https://nlw-agents-backend.onrender.com/*
