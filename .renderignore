@@ -1,0 +1,48 @@
+# Render ignore file - Exclude files from deployment
+# This helps reduce deployment time and size
+
+# Documentation
+*.md
+README.md
+DEPLOY_INSTRUCTIONS_OPTIMIZED.md
+deployment-instructions.txt
+requirements-guide.md
+
+# Development files
+.git
+.gitignore
+.env.example
+.vscode/
+*.log
+
+# Testing
+test_result.md
+backend_test.py
+tests/
+
+# Node modules (will be rebuilt)
+frontend/node_modules/
+**/node_modules/
+
+# Python cache
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+# Build artifacts
+frontend/build/
+dist/
+*.egg-info/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Alternative requirements (we use the main one)
+requirements-minimal.txt
+requirements-detailed.txt
