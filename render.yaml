@@ -1,12 +1,12 @@
 services:
-  # Backend Service - FastAPI (Optimized for deployment)
+  # Backend Service - FastAPI (Optimized for Render deployment)
   - type: web
     name: nlw-agents-backend
     runtime: python
     buildCommand: |
       cd backend
-      pip install --upgrade pip
-      pip install -r requirements.txt
+      pip install --upgrade pip setuptools wheel
+      pip install --no-cache-dir -r requirements.txt
     startCommand: |
       cd backend
       uvicorn server:app --host 0.0.0.0 --port $PORT --workers 1
@@ -17,8 +17,10 @@ services:
         value: /opt/render/project/src/backend
       - key: PYTHONUNBUFFERED
         value: "1"
+      - key: PYTHON_VERSION
+        value: "3.11"
     autoDeploy: true
-    rootDir: backend
+    rootDir: backend  
     plan: free
     region: oregon
     branch: main
@@ -29,8 +31,8 @@ services:
     runtime: node
     buildCommand: |
       cd frontend
-      yarn install --frozen-lockfile
-      yarn build
+      yarn install --frozen-lockfile --network-timeout 1000000
+      CI=false yarn build
     staticPublishPath: ./frontend/build
     envVars:
       - key: REACT_APP_BACKEND_URL
@@ -40,6 +42,8 @@ services:
           property: host
       - key: NODE_OPTIONS
         value: "--max-old-space-size=1024"
+      - key: CI
+        value: "false"
     autoDeploy: true
     rootDir: frontend
     plan: free
