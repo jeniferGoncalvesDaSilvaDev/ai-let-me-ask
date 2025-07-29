@@ -4,6 +4,8 @@ import random
 import requests
 import json
 from typing import Optional
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -11,26 +13,109 @@ logger = logging.getLogger(__name__)
 
 class AIService:
     def __init__(self):
-        self.models_loaded = True  # Skip model loading for now
+        self.models_loaded = False
+        self.hf_model = None
+        self.hf_tokenizer = None
+        self.hf_generator = None
         
     async def initialize_models(self):
-        """Initialize AI models asynchronously"""
+        """Initialize Hugging Face models asynchronously"""
         if self.models_loaded:
             return
             
-        logger.info("AI Service initialized with contextual responses")
-        self.models_loaded = True
+        try:
+            logger.info("Loading Hugging Face DistilGPT-2 model...")
+            
+            # Use DistilGPT-2 - lightweight and fast
+            model_name = "distilgpt2"
+            
+            # Load model and tokenizer
+            self.hf_tokenizer = AutoTokenizer.from_pretrained(model_name)
+            self.hf_model = AutoModelForCausalLM.from_pretrained(model_name)
+            
+            # Set padding token
+            if self.hf_tokenizer.pad_token is None:
+                self.hf_tokenizer.pad_token = self.hf_tokenizer.eos_token
+            
+            # Create text generation pipeline
+            self.hf_generator = pipeline(
+                "text-generation",
+                model=self.hf_model,
+                tokenizer=self.hf_tokenizer,
+                device=-1,  # Use CPU (more compatible with Render)
+                do_sample=True,
+                temperature=0.7,
+                max_length=150,
+                pad_token_id=self.hf_tokenizer.eos_token_id
+            )
+            
+            self.models_loaded = True
+            logger.info("✅ Hugging Face model loaded successfully!")
+            
+        except Exception as e:
+            logger.error(f"❌ Error loading Hugging Face model: {e}")
+            logger.info("🔄 Falling back to contextual responses")
+            self.models_loaded = False
         
     async def generate_response(self, question: str, max_length: int = 100) -> str:
         """Generate AI response for a given question"""
+        # Try HuggingFace model first
         if not self.models_loaded:
             await self.initialize_models()
         
-        # Use contextual responses (reliable fallback)
+        if self.models_loaded and self.hf_generator:
+            try:
+                return await self._generate_hf_response(question)
+            except Exception as e:
+                logger.error(f"HF model error: {e}")
+                # Fall back to contextual responses
+                
+        # Use contextual responses as fallback
         return self._get_contextual_response(question)
+    
+    async def _generate_hf_response(self, question: str) -> str:
+        """Generate response using Hugging Face model"""
+        try:
+            # Create a conversational prompt
+            prompt = f"Pergunta: {question}\nResposta:"
+            
+            # Generate response
+            response = self.hf_generator(
+                prompt,
+                max_length=len(prompt.split()) + 50,
+                num_return_sequences=1,
+                temperature=0.7,
+                do_sample=True,
+                truncation=True
+            )
+            
+            # Extract the generated text
+            generated_text = response[0]['generated_text']
+            
+            # Remove the prompt and get only the answer
+            answer = generated_text.replace(prompt, "").strip()
+            
+            # Clean up the response
+            if answer:
+                # Remove incomplete sentences at the end
+                sentences = answer.split('.')
+                if len(sentences) > 1 and len(sentences[-1]) < 10:
+                    answer = '.'.join(sentences[:-1]) + '.'
+                
+                # Limit length
+                if len(answer) > 200:
+                    answer = answer[:200] + "..."
+                
+                return answer if answer else self._get_contextual_response(question)
+            else:
+                return self._get_contextual_response(question)
+                
+        except Exception as e:
+            logger.error(f"Error in HF response generation: {e}")
+            return self._get_contextual_response(question)
         
     def _get_contextual_response(self, question: str) -> str:
-        """Get contextual responses based on question content"""
+        """Get contextual responses based on question content (fallback)"""
         question_lower = question.lower()
         
         # Greeting responses
