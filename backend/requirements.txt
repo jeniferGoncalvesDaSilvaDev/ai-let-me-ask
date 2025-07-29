@@ -18,3 +18,8 @@ certifi>=2023.11.17
 
 # Additional utilities
 python-dotenv==1.0.0
+
+# Hugging Face - Lightweight AI Models (no API key needed)
+transformers==4.36.0
+torch==2.1.0
+tokenizers==0.15.0
